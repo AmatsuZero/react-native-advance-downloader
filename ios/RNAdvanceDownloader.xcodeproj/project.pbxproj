@@ -1,0 +1,301 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2168C99320823B840072A3B3 /* RNAdvanceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2168C99220823B840072A3B3 /* RNAdvanceDownloader.m */; };
+		2168C99420823B840072A3B3 /* RNAdvanceDownloader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2168C99120823B840072A3B3 /* RNAdvanceDownloader.h */; };
+		2168C9D4208244790072A3B3 /* RNAdvanceDownloadReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2168C9D3208244790072A3B3 /* RNAdvanceDownloadReceipt.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2168C98C20823B840072A3B3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				2168C99420823B840072A3B3 /* RNAdvanceDownloader.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2168C98E20823B840072A3B3 /* libRNAdvanceDownloader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNAdvanceDownloader.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2168C99120823B840072A3B3 /* RNAdvanceDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNAdvanceDownloader.h; sourceTree = "<group>"; };
+		2168C99220823B840072A3B3 /* RNAdvanceDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNAdvanceDownloader.m; sourceTree = "<group>"; };
+		2168C9D2208244790072A3B3 /* RNAdvanceDownloadReceipt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNAdvanceDownloadReceipt.h; sourceTree = "<group>"; };
+		2168C9D3208244790072A3B3 /* RNAdvanceDownloadReceipt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNAdvanceDownloadReceipt.m; sourceTree = "<group>"; };
+		2168C9D520824AA30072A3B3 /* RNAdvanceDownloadReceipt+RNAdvanceDownload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNAdvanceDownloadReceipt+RNAdvanceDownload.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2168C98B20823B840072A3B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2168C98520823B840072A3B3 = {
+			isa = PBXGroup;
+			children = (
+				2168C99020823B840072A3B3 /* RNAdvanceDownloader */,
+				2168C98F20823B840072A3B3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2168C98F20823B840072A3B3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2168C98E20823B840072A3B3 /* libRNAdvanceDownloader.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2168C99020823B840072A3B3 /* RNAdvanceDownloader */ = {
+			isa = PBXGroup;
+			children = (
+				2168C99120823B840072A3B3 /* RNAdvanceDownloader.h */,
+				2168C99220823B840072A3B3 /* RNAdvanceDownloader.m */,
+				2168C9D2208244790072A3B3 /* RNAdvanceDownloadReceipt.h */,
+				2168C9D3208244790072A3B3 /* RNAdvanceDownloadReceipt.m */,
+				2168C9D520824AA30072A3B3 /* RNAdvanceDownloadReceipt+RNAdvanceDownload.h */,
+			);
+			path = RNAdvanceDownloader;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2168C98D20823B840072A3B3 /* RNAdvanceDownloader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2168C99720823B840072A3B3 /* Build configuration list for PBXNativeTarget "RNAdvanceDownloader" */;
+			buildPhases = (
+				2168C98A20823B840072A3B3 /* Sources */,
+				2168C98B20823B840072A3B3 /* Frameworks */,
+				2168C98C20823B840072A3B3 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RNAdvanceDownloader;
+			productName = RNAdvanceDownloader;
+			productReference = 2168C98E20823B840072A3B3 /* libRNAdvanceDownloader.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2168C98620823B840072A3B3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = RNAdvanceDownload;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = MockingBot;
+				TargetAttributes = {
+					2168C98D20823B840072A3B3 = {
+						CreatedOnToolsVersion = 9.3;
+					};
+				};
+			};
+			buildConfigurationList = 2168C98920823B840072A3B3 /* Build configuration list for PBXProject "RNAdvanceDownloader" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2168C98520823B840072A3B3;
+			productRefGroup = 2168C98F20823B840072A3B3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2168C98D20823B840072A3B3 /* RNAdvanceDownloader */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2168C98A20823B840072A3B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2168C99320823B840072A3B3 /* RNAdvanceDownloader.m in Sources */,
+				2168C9D4208244790072A3B3 /* RNAdvanceDownloadReceipt.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2168C99520823B840072A3B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		2168C99620823B840072A3B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2168C99820823B840072A3B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TCU9L9SQC4;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../react-native/React";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2168C99920823B840072A3B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = TCU9L9SQC4;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../react-native/React";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2168C98920823B840072A3B3 /* Build configuration list for PBXProject "RNAdvanceDownloader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2168C99520823B840072A3B3 /* Debug */,
+				2168C99620823B840072A3B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2168C99720823B840072A3B3 /* Build configuration list for PBXNativeTarget "RNAdvanceDownloader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2168C99820823B840072A3B3 /* Debug */,
+				2168C99920823B840072A3B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2168C98620823B840072A3B3 /* Project object */;
+}
