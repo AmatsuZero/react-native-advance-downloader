@@ -83,14 +83,6 @@ RCT_EXPORT_MODULE(RNAdvanceDownloader)
     return self;
 }
 
--(void)setValue:(NSString *)value forHTTPHeaderField:(NSString *)field {
-    if (value) {
-        [self.httpHeaders setValue:value forKey:field];
-    } else {
-        [self.httpHeaders removeObjectForKey:field];
-    }
-}
-
 -(NSString *)valueForHTTPHeaderField:(NSString *)field {
     return self.httpHeaders[field];
 }
@@ -282,22 +274,6 @@ RCT_EXPORT_MODULE(RNAdvanceDownloader)
     }];
 }
 
-- (void) setSuspend:(BOOL)suspend {
-    self.downloadQueue.suspended = suspend;
-}
-
-- (void)cancelAllDownloads {
-    [self.downloadQueue cancelAllOperations];
-    [self setAllStateToNone];
-    [self saveAllDownloadRecepits];
-}
-
-- (void)removeAndClearAll {
-    [self cancelAllDownloads];
-    [[NSFileManager defaultManager] removeItemAtPath:cacheFolder() error:nil];
-    clearCacheFolder();
-}
-
 #pragma mark - Notifications
 - (void) applicationWillTerminate: (NSNotification*)notification {
     [self setAllStateToNone];
@@ -382,34 +358,52 @@ RCT_EXPORT_MODULE(RNAdvanceDownloader)
 }
 
 #pragma mark - RN Methods
-RCT_EXPORT_METHOD(cancelAllTasks) {
-    [self cancelAllDownloads];
+
+RCT_EXPORT_METHOD(cancelAllDownloads) {
+    [self.downloadQueue cancelAllOperations];
+    [self setAllStateToNone];
+    [self saveAllDownloadRecepits];
+}
+
+RCT_EXPORT_METHOD(setDownloadPrioritization:(RNAdvanceDownloadPrioritization)downloadPrioritization) {
+    _downloadPrioritization = downloadPrioritization;
 }
 
 RCT_EXPORT_METHOD(getMaxConcurrentDownloads: (RCTResponseSenderBlock)callback) {
     callback(@[[NSNull null], @(self.maxConcurrentDownloads)]);
 }
+
 RCT_EXPORT_METHOD(setMaxConcurrentDownloads:(NSInteger)num) {
     _downloadQueue.maxConcurrentOperationCount = num;
 }
+
 RCT_EXPORT_METHOD(getCurrentDownloadCount: (RCTResponseSenderBlock)callback) {
     callback(@[[NSNull null], @(self.maxConcurrentDownloads)]);
 }
+
 RCT_EXPORT_METHOD(getTimeout: (RCTResponseSenderBlock)callback) {
     callback(@[[NSNull null], @(self.downloadTimeout)]);
 }
-RCT_EXPORT_METHOD(setTimeOut: (NSTimeInterval)time) {
-    self.downloadTimeout = time;
+
+RCT_EXPORT_METHOD(setDownloadTimeout:(NSTimeInterval)downloadTimeout) {
+    _downloadTimeout = downloadTimeout;
 }
-RCT_EXPORT_METHOD(set:(nonnull NSString*)value forHTTPHeaderField:(nonnull NSString *)field) {
-    [self setValue:value forHTTPHeaderField:field];
+
+RCT_EXPORT_METHOD(setValue:(NSString *)value forHTTPHeaderField:(NSString *)field) {
+    if (value) {
+        [self.httpHeaders setValue:value forKey:field];
+    } else {
+        [self.httpHeaders removeObjectForKey:field];
+    }
 }
+
 RCT_EXPORT_METHOD(valueForHTTPHeaderField:(nullable NSString*)field callback:(RCTResponseSenderBlock)callback) {
-    callback(@[[NSNull null], [self valueForHTTPHeaderField:field] ?: @""]);
+    callback(@[[NSNull null], [self valueForHTTPHeaderField:field] ?: [NSNull null]]);
 }
-RCT_EXPORT_METHOD(pause:(BOOL)flag) {
-    [self setSuspend:flag];
+RCT_EXPORT_METHOD(setSuspend:(BOOL)suspend) {
+    self.downloadQueue.suspended = suspend;
 }
+
 RCT_EXPORT_METHOD(setCacheFolder:(NSString*)path
                   resolver:(RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject) {
@@ -424,12 +418,10 @@ RCT_EXPORT_METHOD(setCacheFolder:(NSString*)path
     }
 }
 
-RCT_EXPORT_METHOD(cancelAll) {
-    [self cancelAllTasks];
-}
-
-RCT_EXPORT_METHOD(removeAll) {
-    [self removeAndClearAll];
+RCT_EXPORT_METHOD(removeAndClearAll) {
+    [self cancelAllDownloads];
+    [[NSFileManager defaultManager] removeItemAtPath:cacheFolder() error:nil];
+    clearCacheFolder();
 }
 
 RCT_EXPORT_METHOD(cancelTask: (nonnull NSString*)url callback:(RCTResponseSenderBlock)callback) {
@@ -458,7 +450,9 @@ RCT_EXPORT_METHOD(removeTask: (nonnull NSString*)url callback:(RCTResponseSender
               @"downloading": @(RNAdvanceDownloadStateDownloading),
               @"suspend": @(RNAdvanceDownloadStateSuspend),
               @"fail": @(RNAdvanceDownloadStateFailed),
-              @"completed": @(RNAdvanceDownloadStateCompleted)};
+              @"completed": @(RNAdvanceDownloadStateCompleted),
+              @"FIFO":@(RNAdvanceDownloadPrioritizationFIFO),
+              @"LIFO":@(RNAdvanceDownloadPrioritizationLIFO)};
 }
 
 RCT_EXPORT_METHOD(taskState:(NSString*)url callback:(RCTResponseSenderBlock)callback) {

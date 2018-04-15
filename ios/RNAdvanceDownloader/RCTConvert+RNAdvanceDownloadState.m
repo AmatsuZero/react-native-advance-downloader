@@ -21,4 +21,10 @@ RCT_ENUM_CONVERTER(RNAdvanceDownloadState,
                    RNAdvanceDownloadStateNone,
                    integerValue);
 
+RCT_ENUM_CONVERTER(RNAdvanceDownloadPrioritization,
+                   (@{@"FIFO": @(RNAdvanceDownloadPrioritizationFIFO),
+                      @"LIFO":@(RNAdvanceDownloadPrioritizationLIFO)}),
+                   RNAdvanceDownloadPrioritizationFIFO,
+                   integerValue);
+
 @end
