@@ -11,8 +11,20 @@
 #import "RNAdvanceDownloader+RNAdvanceDownloaderExtension.h"
 #import "RNAdvanceDownloadOperation+RNAdvanceDownloadOperationExtension.h"
 
-@implementation RNAdvanceDownloader
+void dispatch_main_async_safe(void (^block)(void)) {
+    const char* currentLabel = dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL);
+    const char* mainLabLabel = dispatch_queue_get_label(dispatch_get_main_queue());
+    if (strcmp(currentLabel, mainLabLabel) == 0) {// 判断是否在主线程
+        block();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), block);
+    }
+}
 
+@implementation RNAdvanceDownloader
+{
+    BOOL hasListeners;
+}
 RCT_EXPORT_MODULE(RNAdvanceDownloader)
 -(NSMutableDictionary *)allDownloadRecepits {
     if (!_allDownloadRecepits) {
@@ -81,10 +93,6 @@ RCT_EXPORT_MODULE(RNAdvanceDownloader)
 
 -(NSString *)valueForHTTPHeaderField:(NSString *)field {
     return self.httpHeaders[field];
-}
-
--(void)setMaxConcurrentDownloads:(NSInteger)maxConcurrentDownloads {
-    _downloadQueue.maxConcurrentOperationCount = maxConcurrentDownloads;
 }
 
 -(NSUInteger)currentDownloadCount {
@@ -371,6 +379,146 @@ RCT_EXPORT_MODULE(RNAdvanceDownloader)
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     RNAdvanceDownloadOperation* dataoperation = [self operationWithTask:task];
     [dataoperation URLSession:session task:task didCompleteWithError:error];
+}
+
+#pragma mark - RN Methods
+RCT_EXPORT_METHOD(cancelAllTasks) {
+    [self cancelAllDownloads];
+}
+
+RCT_EXPORT_METHOD(getMaxConcurrentDownloads: (RCTResponseSenderBlock)callback) {
+    callback(@[[NSNull null], @(self.maxConcurrentDownloads)]);
+}
+RCT_EXPORT_METHOD(setMaxConcurrentDownloads:(NSInteger)num) {
+    _downloadQueue.maxConcurrentOperationCount = num;
+}
+RCT_EXPORT_METHOD(getCurrentDownloadCount: (RCTResponseSenderBlock)callback) {
+    callback(@[[NSNull null], @(self.maxConcurrentDownloads)]);
+}
+RCT_EXPORT_METHOD(getTimeout: (RCTResponseSenderBlock)callback) {
+    callback(@[[NSNull null], @(self.downloadTimeout)]);
+}
+RCT_EXPORT_METHOD(setTimeOut: (NSTimeInterval)time) {
+    self.downloadTimeout = time;
+}
+RCT_EXPORT_METHOD(set:(nonnull NSString*)value forHTTPHeaderField:(nonnull NSString *)field) {
+    [self setValue:value forHTTPHeaderField:field];
+}
+RCT_EXPORT_METHOD(valueForHTTPHeaderField:(nullable NSString*)field callback:(RCTResponseSenderBlock)callback) {
+    callback(@[[NSNull null], [self valueForHTTPHeaderField:field] ?: @""]);
+}
+RCT_EXPORT_METHOD(pause:(BOOL)flag) {
+    [self setSuspend:flag];
+}
+RCT_EXPORT_METHOD(setCacheFolder:(NSString*)path
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        cacheFolderPath = path;
+        resolve(path);
+    } else {
+        NSString* message = @"Path dosen't exist yet";
+        reject(message, @"-101", [NSError errorWithDomain:NSURLErrorDomain
+                                                     code:-101
+                                                 userInfo:@{NSLocalizedDescriptionKey:message}]);
+    }
+}
+
+RCT_EXPORT_METHOD(cancelAll) {
+    [self cancelAllTasks];
+}
+
+RCT_EXPORT_METHOD(removeAll) {
+    [self removeAndClearAll];
+}
+
+RCT_EXPORT_METHOD(cancelTask: (nonnull NSString*)url callback:(RCTResponseSenderBlock)callback) {
+    RNAdvanceDownloadReceipt* receipt = self.allDownloadRecepits[url];
+    if (!receipt) {
+        return;
+    }
+    [self cancel:receipt completed:^{
+        callback(@[[NSNull null], @(YES)]);
+    }];
+}
+
+RCT_EXPORT_METHOD(removeTask: (nonnull NSString*)url callback:(RCTResponseSenderBlock)callback) {
+    RNAdvanceDownloadReceipt* receipt = self.allDownloadRecepits[url];
+    if (!receipt) {
+        return;
+    }
+    [self remove:receipt completed:^{
+        callback(@[[NSNull null], @(YES)]);
+    }];
+}
+
+-(NSDictionary *)constantsToExport {
+    return  @{@"none": @(RNAdvanceDownloadStateNone),
+              @"resume": @(RNAdvanceDownloadStateWillResume),
+              @"downloading": @(RNAdvanceDownloadStateDownloading),
+              @"suspend": @(RNAdvanceDownloadStateSuspend),
+              @"fail": @(RNAdvanceDownloadStateFailed),
+              @"completed": @(RNAdvanceDownloadStateCompleted)};
+}
+
+RCT_EXPORT_METHOD(taskState:(NSString*)url callback:(RCTResponseSenderBlock)callback) {
+    RNAdvanceDownloadReceipt* receipt = self.allDownloadRecepits[url];
+    if (!receipt) {
+        callback(@[[NSNull null], @"none"]);
+    } else {
+        NSString* state = @"none";
+        switch (receipt.state) {
+            case RNAdvanceDownloadStateNone: state = @"none";
+                break;
+            case RNAdvanceDownloadStateWillResume: state = @"resume";
+                break;
+            case RNAdvanceDownloadStateDownloading: state = @"downloading";
+                break;
+            case RNAdvanceDownloadStateSuspend: state = @"suspend";
+                break;
+            case RNAdvanceDownloadStateFailed: state = @"fail";
+                break;
+            case RNAdvanceDownloadStateCompleted: state = @"completed";
+                break;
+        }
+        callback(@[[NSNull null], state]);
+    }
+}
+
+#pragma mark - Download Events
+-(NSArray<NSString *> *)supportedEvents {
+    return @[@"Downloading", @"Completed"];
+}
+
+RCT_EXPORT_METHOD(addDownloadTask:(nonnull NSString*)url) {
+    __weak typeof(self) weakSelf = self;
+    [self downloadDataWithURL:[NSURL URLWithString:url] progress:^(NSInteger receivedSize, NSInteger expectedSize, NSInteger speed, NSURL * _Nullable targetURL) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf->hasListeners) {
+            [self sendEventWithName:@"Downloading" body:@{@"receivedSize": @(receivedSize),
+                                                          @"expectedSize": @(expectedSize),
+                                                          @"speed": @(speed),
+                                                          @"url": targetURL ?: [NSNull null]}];
+        }
+    } completed:^(RNAdvanceDownloadReceipt * _Nullable receipt, NSError * _Nullable error, BOOL isFinished) {
+        __strong typeof(self) strongSelf = weakSelf;
+        if (strongSelf->hasListeners) {
+            [self sendEventWithName:@"Completed" body:@{@"fileName": receipt.fileName ?:[NSNull null],
+                                                        @"filePath": receipt.filePath ?:[NSNull null],
+                                                        @"url": receipt.url ?: [NSNull null],
+                                                        @"error": error.localizedDescription ?: [NSNull null],
+                                                        @"isFinished": @(isFinished)
+                                                        }];
+        }
+    }];
+}
+
+-(void)startObserving {
+    hasListeners = YES;
+}
+
+-(void)stopObserving {
+    hasListeners = NO;
 }
 
 @end

@@ -8,14 +8,6 @@
 
 #import "RNAdvanceDownloadOperation.h"
 
-NSString* const RNAdvanceDownloadStartNotification = @"RNAdvanceDownloadStartNotification";
-NSString* const RNAdvanceDownloadReceiveResponseNotifcation = @"RNAdvanceDownloadReceiveResponseNotifcation";
-NSString* const RNAdvanceDownloadStopNotification = @"RNAdvanceDownloadStopNotification";
-NSString* const RNAdvanceDownloadFinishNotification = @"RNAdvanceDownloadFinishNotification";
-
-static NSString* const kProgressCallbackKey = @"progress";
-static NSString* const kCompleteCallbackKey = @"completed";
-
 typedef NSMutableDictionary<NSString*, id> RNAdvanceDownloadCallbacksDictionary;
 
 @interface RNAdvanceDownloadOperation ()

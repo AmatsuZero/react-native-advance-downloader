@@ -11,6 +11,7 @@
 		2168C99420823B840072A3B3 /* RNAdvanceDownloader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2168C99120823B840072A3B3 /* RNAdvanceDownloader.h */; };
 		2168C9D4208244790072A3B3 /* RNAdvanceDownloadReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2168C9D3208244790072A3B3 /* RNAdvanceDownloadReceipt.m */; };
 		2168C9D820825FB60072A3B3 /* RNAdvanceDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2168C9D720825FB60072A3B3 /* RNAdvanceDownloadOperation.m */; };
+		2168C9E62083A1BE0072A3B3 /* RCTConvert+RNAdvanceDownloadState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2168C9E52083A1BE0072A3B3 /* RCTConvert+RNAdvanceDownloadState.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,8 @@
 		2168C9D720825FB60072A3B3 /* RNAdvanceDownloadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNAdvanceDownloadOperation.m; sourceTree = "<group>"; };
 		2168C9D9208266C80072A3B3 /* RNAdvanceDownloadOperation+RNAdvanceDownloadOperationExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNAdvanceDownloadOperation+RNAdvanceDownloadOperationExtension.h"; sourceTree = "<group>"; };
 		2168C9DC20833A330072A3B3 /* RNAdvanceDownloader+RNAdvanceDownloaderExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNAdvanceDownloader+RNAdvanceDownloaderExtension.h"; sourceTree = "<group>"; };
+		2168C9E42083A1BE0072A3B3 /* RCTConvert+RNAdvanceDownloadState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCTConvert+RNAdvanceDownloadState.h"; sourceTree = "<group>"; };
+		2168C9E52083A1BE0072A3B3 /* RCTConvert+RNAdvanceDownloadState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "RCTConvert+RNAdvanceDownloadState.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +79,8 @@
 				2168C9D720825FB60072A3B3 /* RNAdvanceDownloadOperation.m */,
 				2168C9D2208244790072A3B3 /* RNAdvanceDownloadReceipt.h */,
 				2168C9D3208244790072A3B3 /* RNAdvanceDownloadReceipt.m */,
+				2168C9E42083A1BE0072A3B3 /* RCTConvert+RNAdvanceDownloadState.h */,
+				2168C9E52083A1BE0072A3B3 /* RCTConvert+RNAdvanceDownloadState.m */,
 			);
 			path = RNAdvanceDownloader;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 			files = (
 				2168C99320823B840072A3B3 /* RNAdvanceDownloader.m in Sources */,
 				2168C9D4208244790072A3B3 /* RNAdvanceDownloadReceipt.m in Sources */,
+				2168C9E62083A1BE0072A3B3 /* RCTConvert+RNAdvanceDownloadState.m in Sources */,
 				2168C9D820825FB60072A3B3 /* RNAdvanceDownloadOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

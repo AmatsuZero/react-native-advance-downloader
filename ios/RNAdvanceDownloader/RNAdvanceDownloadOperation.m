@@ -10,6 +10,14 @@
 #import "RNAdvanceDownloadOperation+RNAdvanceDownloadOperationExtension.h"
 #import "RNAdvanceDownloadReceipt+RNAdvanceDownloadReceiptExtension.h"
 
+NSString* const RNAdvanceDownloadStartNotification = @"RNAdvanceDownloadStartNotification";
+NSString* const RNAdvanceDownloadReceiveResponseNotifcation = @"RNAdvanceDownloadReceiveResponseNotifcation";
+NSString* const RNAdvanceDownloadStopNotification = @"RNAdvanceDownloadStopNotification";
+NSString* const RNAdvanceDownloadFinishNotification = @"RNAdvanceDownloadFinishNotification";
+
+static NSString* const kProgressCallbackKey = @"progress";
+static NSString* const kCompleteCallbackKey = @"completed";
+
 @interface RNAdvanceDownloadOperation()
 
 @property(assign, nonatomic, getter=isExecuting) BOOL executing;

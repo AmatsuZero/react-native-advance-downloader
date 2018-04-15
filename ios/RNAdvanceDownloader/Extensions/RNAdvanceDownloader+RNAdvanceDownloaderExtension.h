@@ -8,6 +8,7 @@
 @import UIKit;
 #import "RNAdvanceDownloader.h"
 
+@class RNAdvanceDownloadOperation;
 NSString* const RNAdvanceDownloadCacheFolderName = @"RNAdvanceDownloadCache";
 
 static NSString* cacheFolderPath;
