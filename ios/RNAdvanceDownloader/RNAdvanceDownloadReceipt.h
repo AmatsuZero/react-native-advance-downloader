@@ -6,7 +6,7 @@
 //  Copyright © 2018年 MockingBot. All rights reserved.
 //
 
-#import <React/RCTBridgeModule.h>
+#import <Foundation/Foundation.h>
 
 @class RNAdvanceDownloadReceipt;
 

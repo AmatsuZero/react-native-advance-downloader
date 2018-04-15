@@ -30,8 +30,8 @@
 - (void) setTotalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite;
 - (void) setState:(RNAdvanceDownloadState)state;
 - (void) setDownloaderOperationCancelToken: (nullable id)downloadOperationCancelToken;
-- (void) setDownloaderOperationProgressBlock: (nullable RNAdvanceDownloaderProgressBlock)downloaderProgressBlock;
+- (void) setDownloaderProgressBlock: (nullable RNAdvanceDownloaderProgressBlock)downloaderProgressBlock;
 - (void) setDownloaderCompleteBlock: (nullable RNAdvanceDownloaderCompletedBlock)downloaderCompleteBlock;
-- (void) setSpeed: (NSString* _Nullable)speed;
+- (void) setSpeed: (nullable NSString*)speed;
 
 @end

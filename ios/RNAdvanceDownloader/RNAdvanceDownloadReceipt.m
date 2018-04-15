@@ -7,7 +7,7 @@
 //
 #import <CommonCrypto/CommonDigest.h>
 #import "RNAdvanceDownloadReceipt.h"
-#import "RNAdvanceDownloadReceipt+RNAdvanceDownload.h"
+#import "RNAdvanceDownloadReceipt+RNAdvanceDownloadReceiptExtension.h"
 
 extern NSString* cacheFolder(void);
 
@@ -138,6 +138,44 @@ NSString* _Nullable getMD5String(NSString* _Nullable str) {
                                       unsignedIntegerValue];
     }
     return self;
+}
+
+-(instancetype)initWithURLString:(NSString *)URLString
+    downloadOperationCancelToken:(id)downloadOperationCancelToken
+         downloaderProgressBlock:(RNAdvanceDownloaderProgressBlock)downloadProgressBlock
+        downloaderCompletedBlock:(RNAdvanceDownloaderCompletedBlock)downloaderCompleteBlock {
+    if (self = [super init]) {
+        _url = URLString;
+        _totalBytesExpectedToWrite = 0;
+        _downloadOperationCancelToken = downloadOperationCancelToken;
+        _downloaderProgressBlock = downloadProgressBlock;
+        _downloaderCompleteBlock = downloaderCompleteBlock;
+    }
+    return self;
+}
+
+-(void)setTotalBytesExpectedToWrite:(long long)totalBytesExpectedToWrite {
+    _totalBytesExpectedToWrite = totalBytesExpectedToWrite;
+}
+
+-(void)setState:(RNAdvanceDownloadState)state {
+    _state = state;
+}
+
+-(void)setDownloaderOperationCancelToken:(id)downloadOperationCancelToken {
+    _downloadOperationCancelToken = downloadOperationCancelToken;
+}
+
+-(void)setDownloaderProgressBlock:(RNAdvanceDownloaderProgressBlock)downloaderProgressBlock {
+    _downloaderProgressBlock = downloaderProgressBlock;
+}
+
+-(void)setDownloaderCompleteBlock:(RNAdvanceDownloaderCompletedBlock)downloaderCompleteBlock {
+    _downloaderCompleteBlock = downloaderCompleteBlock;
+}
+
+-(void)setSpeed:(NSString *)speed {
+    _speed = speed;
 }
 
 @end

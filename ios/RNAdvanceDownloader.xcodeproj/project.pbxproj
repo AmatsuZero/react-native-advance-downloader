@@ -10,6 +10,7 @@
 		2168C99320823B840072A3B3 /* RNAdvanceDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2168C99220823B840072A3B3 /* RNAdvanceDownloader.m */; };
 		2168C99420823B840072A3B3 /* RNAdvanceDownloader.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2168C99120823B840072A3B3 /* RNAdvanceDownloader.h */; };
 		2168C9D4208244790072A3B3 /* RNAdvanceDownloadReceipt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2168C9D3208244790072A3B3 /* RNAdvanceDownloadReceipt.m */; };
+		2168C9D820825FB60072A3B3 /* RNAdvanceDownloadOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2168C9D720825FB60072A3B3 /* RNAdvanceDownloadOperation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,7 +32,11 @@
 		2168C99220823B840072A3B3 /* RNAdvanceDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNAdvanceDownloader.m; sourceTree = "<group>"; };
 		2168C9D2208244790072A3B3 /* RNAdvanceDownloadReceipt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNAdvanceDownloadReceipt.h; sourceTree = "<group>"; };
 		2168C9D3208244790072A3B3 /* RNAdvanceDownloadReceipt.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNAdvanceDownloadReceipt.m; sourceTree = "<group>"; };
-		2168C9D520824AA30072A3B3 /* RNAdvanceDownloadReceipt+RNAdvanceDownload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNAdvanceDownloadReceipt+RNAdvanceDownload.h"; sourceTree = "<group>"; };
+		2168C9D520824AA30072A3B3 /* RNAdvanceDownloadReceipt+RNAdvanceDownloadReceiptExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNAdvanceDownloadReceipt+RNAdvanceDownloadReceiptExtension.h"; sourceTree = "<group>"; };
+		2168C9D620825FB60072A3B3 /* RNAdvanceDownloadOperation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNAdvanceDownloadOperation.h; sourceTree = "<group>"; };
+		2168C9D720825FB60072A3B3 /* RNAdvanceDownloadOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNAdvanceDownloadOperation.m; sourceTree = "<group>"; };
+		2168C9D9208266C80072A3B3 /* RNAdvanceDownloadOperation+RNAdvanceDownloadOperationExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNAdvanceDownloadOperation+RNAdvanceDownloadOperationExtension.h"; sourceTree = "<group>"; };
+		2168C9DC20833A330072A3B3 /* RNAdvanceDownloader+RNAdvanceDownloaderExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RNAdvanceDownloader+RNAdvanceDownloaderExtension.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,13 +69,25 @@
 		2168C99020823B840072A3B3 /* RNAdvanceDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				2168C9DD20833C9C0072A3B3 /* Extensions */,
 				2168C99120823B840072A3B3 /* RNAdvanceDownloader.h */,
 				2168C99220823B840072A3B3 /* RNAdvanceDownloader.m */,
+				2168C9D620825FB60072A3B3 /* RNAdvanceDownloadOperation.h */,
+				2168C9D720825FB60072A3B3 /* RNAdvanceDownloadOperation.m */,
 				2168C9D2208244790072A3B3 /* RNAdvanceDownloadReceipt.h */,
 				2168C9D3208244790072A3B3 /* RNAdvanceDownloadReceipt.m */,
-				2168C9D520824AA30072A3B3 /* RNAdvanceDownloadReceipt+RNAdvanceDownload.h */,
 			);
 			path = RNAdvanceDownloader;
+			sourceTree = "<group>";
+		};
+		2168C9DD20833C9C0072A3B3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2168C9D520824AA30072A3B3 /* RNAdvanceDownloadReceipt+RNAdvanceDownloadReceiptExtension.h */,
+				2168C9D9208266C80072A3B3 /* RNAdvanceDownloadOperation+RNAdvanceDownloadOperationExtension.h */,
+				2168C9DC20833A330072A3B3 /* RNAdvanceDownloader+RNAdvanceDownloaderExtension.h */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -132,6 +149,7 @@
 			files = (
 				2168C99320823B840072A3B3 /* RNAdvanceDownloader.m in Sources */,
 				2168C9D4208244790072A3B3 /* RNAdvanceDownloadReceipt.m in Sources */,
+				2168C9D820825FB60072A3B3 /* RNAdvanceDownloadOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
