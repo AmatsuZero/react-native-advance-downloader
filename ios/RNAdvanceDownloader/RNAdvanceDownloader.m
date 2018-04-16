@@ -5,6 +5,7 @@
 //  Created by modao on 2018/4/14.
 //  Copyright © 2018年 MockingBot. All rights reserved.
 //
+#import <React/RCTUtils.h>
 #import "RNAdvanceDownloader.h"
 #import "RNAdvanceDownloadOperation.h"
 #import "RNAdvanceDownloadReceipt+RNAdvanceDownloadReceiptExtension.h"
@@ -38,13 +39,23 @@ RCT_EXPORT_MODULE(RNAdvanceDownloader)
     static RNAdvanceDownloader* instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [self new];
+        instance = [[self alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     });
     return instance;
 }
 
--(instancetype)init {
-    return [self initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+-(instancetype)init {// RN 初始化
+    if ([self initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(downloadStart:)
+                                                     name:RNAdvanceDownloadStartNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(downloadStop:)
+                                                     name:RNAdvanceDownloadStopNotification
+                                                   object:nil];
+    }
+    return self;
 }
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)sessionConfiguration {
@@ -369,39 +380,28 @@ RCT_EXPORT_METHOD(setDownloadPrioritization:(RNAdvanceDownloadPrioritization)dow
     _downloadPrioritization = downloadPrioritization;
 }
 
-RCT_EXPORT_METHOD(getMaxConcurrentDownloads: (RCTResponseSenderBlock)callback) {
-    callback(@[[NSNull null], @(self.maxConcurrentDownloads)]);
-}
-
 RCT_EXPORT_METHOD(setMaxConcurrentDownloads:(NSInteger)num) {
     _downloadQueue.maxConcurrentOperationCount = num;
-}
-
-RCT_EXPORT_METHOD(getCurrentDownloadCount: (RCTResponseSenderBlock)callback) {
-    callback(@[[NSNull null], @(self.maxConcurrentDownloads)]);
-}
-
-RCT_EXPORT_METHOD(getTimeout: (RCTResponseSenderBlock)callback) {
-    callback(@[[NSNull null], @(self.downloadTimeout)]);
 }
 
 RCT_EXPORT_METHOD(setDownloadTimeout:(NSTimeInterval)downloadTimeout) {
     _downloadTimeout = downloadTimeout;
 }
 
-RCT_EXPORT_METHOD(setValue:(NSString *)value forHTTPHeaderField:(NSString *)field) {
+RCT_EXPORT_METHOD(setSuspend:(BOOL)suspend) {
+    self.downloadQueue.suspended = suspend;
+}
+
+RCT_EXPORT_METHOD(getCacheFolderPath: (RCTResponseSenderBlock)callback) {
+    callback(@[[NSNull null], cacheFolder()]);
+}
+
+RCT_REMAP_METHOD(setHTTPHeader, setValue:(NSString *)value forHTTPHeaderField:(NSString *)field) {
     if (value) {
         [self.httpHeaders setValue:value forKey:field];
     } else {
         [self.httpHeaders removeObjectForKey:field];
     }
-}
-
-RCT_EXPORT_METHOD(valueForHTTPHeaderField:(nullable NSString*)field callback:(RCTResponseSenderBlock)callback) {
-    callback(@[[NSNull null], [self valueForHTTPHeaderField:field] ?: [NSNull null]]);
-}
-RCT_EXPORT_METHOD(setSuspend:(BOOL)suspend) {
-    self.downloadQueue.suspended = suspend;
 }
 
 RCT_EXPORT_METHOD(setCacheFolder:(NSString*)path
@@ -427,6 +427,7 @@ RCT_EXPORT_METHOD(removeAndClearAll) {
 RCT_EXPORT_METHOD(cancelTask: (nonnull NSString*)url callback:(RCTResponseSenderBlock)callback) {
     RNAdvanceDownloadReceipt* receipt = self.allDownloadRecepits[url];
     if (!receipt) {
+        callback(@[[NSNull null], @(NO)]);
         return;
     }
     [self cancel:receipt completed:^{
@@ -437,6 +438,7 @@ RCT_EXPORT_METHOD(cancelTask: (nonnull NSString*)url callback:(RCTResponseSender
 RCT_EXPORT_METHOD(removeTask: (nonnull NSString*)url callback:(RCTResponseSenderBlock)callback) {
     RNAdvanceDownloadReceipt* receipt = self.allDownloadRecepits[url];
     if (!receipt) {
+        callback(@[[NSNull null], @(NO)]);
         return;
     }
     [self remove:receipt completed:^{
@@ -481,7 +483,7 @@ RCT_EXPORT_METHOD(taskState:(NSString*)url callback:(RCTResponseSenderBlock)call
 
 #pragma mark - Download Events
 -(NSArray<NSString *> *)supportedEvents {
-    return @[@"Downloading", @"Completed"];
+    return @[@"Start", @"Downloading", @"Completed", @"Stop"];
 }
 
 RCT_EXPORT_METHOD(addDownloadTask:(nonnull NSString*)url) {
@@ -500,7 +502,7 @@ RCT_EXPORT_METHOD(addDownloadTask:(nonnull NSString*)url) {
             [self sendEventWithName:@"Completed" body:@{@"fileName": receipt.fileName ?:[NSNull null],
                                                         @"filePath": receipt.filePath ?:[NSNull null],
                                                         @"url": receipt.url ?: [NSNull null],
-                                                        @"error": error.localizedDescription ?: [NSNull null],
+                                                        @"error": error ? RCTJSErrorFromNSError(error): [NSNull null],
                                                         @"isFinished": @(isFinished)
                                                         }];
         }
@@ -513,6 +515,25 @@ RCT_EXPORT_METHOD(addDownloadTask:(nonnull NSString*)url) {
 
 -(void)stopObserving {
     hasListeners = NO;
+}
+
+#pragma mark - Relay
+- (void) downloadStart:(NSNotification*)notification {
+    RNAdvanceDownloadReceipt* receipt = notification.object;
+    if (receipt && hasListeners) {
+        [self sendEventWithName:@"Start" body:@{@"url": receipt.url,
+                                                @"filePath": receipt.filePath ?: [NSNull null]
+                                                }];
+    }
+}
+
+- (void) downloadStop: (NSNotification*)notification {
+    RNAdvanceDownloadReceipt* receipt = notification.object;
+    if (receipt && hasListeners) {
+        [self sendEventWithName:@"Stop" body:@{@"url": receipt.url,
+                                                @"filePath": receipt.filePath ?: [NSNull null]
+                                                }];
+    }
 }
 
 @end
