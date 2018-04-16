@@ -23,11 +23,9 @@
     "url": "https://github.com/AmatsuZero/react-native-advance-downloader/issues"
   },
   "homepage": "https://github.com/AmatsuZero/react-native-advance-downloader#readme",
-  "dependencies": {
-    "react-native": "^0.55.2"
-  },
+  "dependencies": {},
   "peerDependencies": {
     "react": "*",
-    "react-native":"*"
+    "react-native": "*"
   }
 }

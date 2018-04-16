@@ -2,7 +2,7 @@ import { NativeModules, NativeEventEmitter } from "react-native";
 
 const { RNAdvanceDownloader } = NativeModules;
 
-export default class AdvanceDownloadManager {
+class AdvanceDownloadManager {
 
     constructor() {
         this._priority = RNAdvanceDownloader.FIFO
@@ -153,4 +153,10 @@ export default class AdvanceDownloadManager {
     static addDownloadTask(url) {
         RNAdvanceDownloader.addDownloadTask(url)
     }
+}
+
+const SharedDownloader = AdvanceDownloadManager()
+
+export {
+    SharedDownloader
 }
